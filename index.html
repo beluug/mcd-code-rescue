@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>McRescue · 麦门代码急救站 | 1024 程序员代码续命舱</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+  <style>
+    :root {
+      --mcd-red: #DA291C;
+      --mcd-yellow: #FFBC0D;
+      --mcd-dark: #121214;
+      --mcd-card-bg: #1a1a1e;
+      --mcd-border: #2a2a30;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-green: #10b981;
+      --accent-cyan: #06b6d4;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    body {
+      background-color: var(--mcd-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(180deg, rgba(218, 41, 28, 0.25) 0%, rgba(18, 18, 20, 0.95) 100%);
+      border-bottom: 1px solid var(--mcd-border);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+    .header-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .m-logo {
+      font-size: 2.2rem;
+      line-height: 1;
+      background: var(--mcd-yellow);
+      color: var(--mcd-red);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-weight: 900;
+      box-shadow: 0 0 20px rgba(255, 188, 13, 0.4);
+    }
+    .logo-text h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .badge-tag {
+      background: var(--mcd-red);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .logo-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .mode-switch {
+      display: flex;
+      background: #232328;
+      padding: 0.25rem;
+      border-radius: 9999px;
+      border: 1px solid var(--mcd-border);
+    }
+    .mode-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .mode-btn.active {
+      background: var(--mcd-yellow);
+      color: #000;
+      box-shadow: 0 2px 8px rgba(255, 188, 13, 0.3);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      flex: 1;
+    }
+    @media (max-width: 860px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .panel {
+      background: var(--mcd-card-bg);
+      border: 1px solid var(--mcd-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--mcd-border);
+      padding-bottom: 0.75rem;
+    }
+    .panel-header h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--mcd-yellow);
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+    input, select, textarea {
+      background: #121215;
+      border: 1px solid var(--mcd-border);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--mcd-yellow);
+    }
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .scenario-card {
+      background: #141417;
+      border: 1px solid var(--mcd-border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .scenario-card:hover {
+      border-color: var(--mcd-yellow);
+      transform: translateY(-2px);
+    }
+    .scenario-card.selected {
+      border-color: var(--mcd-yellow);
+      background: rgba(255, 188, 13, 0.08);
+      box-shadow: 0 0 12px rgba(255, 188, 13, 0.2);
+    }
+    .scenario-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .scenario-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+    .action-btn {
+      background: linear-gradient(135deg, var(--mcd-yellow) 0%, #f59e0b 100%);
+      color: #000;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.85rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(255, 188, 13, 0.35);
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+    .action-btn:active {
+      transform: scale(0.98);
+    }
+    /* Prescription Result View */
+    .prescription-card {
+      background: #131316;
+      border: 2px solid var(--mcd-yellow);
+      border-radius: 14px;
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .prescription-card::before {
+      content: "McD MCP Rx";
+      position: absolute;
+      top: -10px;
+      right: 15px;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+    }
+    .rx-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--mcd-border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .rx-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--mcd-yellow);
+    }
+    .rx-store {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .meal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    .meal-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+    }
+    .meal-info h4 {
+      font-size: 0.85rem;
+      color: #fff;
+    }
+    .meal-info p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .meal-price {
+      font-weight: 700;
+      color: var(--mcd-yellow);
+      font-size: 0.95rem;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      background: #18181d;
+      padding: 0.75rem;
+      border-radius: 10px;
+    }
+    .metric-box {
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-green);
+    }
+    .metric-val.warn {
+      color: var(--accent-cyan);
+    }
+    .metric-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .motto-banner {
+      background: rgba(218, 41, 28, 0.15);
+      border-left: 3px solid var(--mcd-red);
+      padding: 0.6rem 0.75rem;
+      font-size: 0.8rem;
+      color: #fca5a5;
+      font-style: italic;
+      margin-bottom: 1rem;
+      border-radius: 0 6px 6px 0;
+    }
+    .total-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--mcd-border);
+    }
+    .total-price {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--mcd-yellow);
+    }
+    .saved-tag {
+      font-size: 0.75rem;
+      color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.15);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      margin-left: 0.4rem;
+    }
+    /* Poster preview canvas */
+    #badgeCanvas {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: block;
+    }
+    .btn-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .sub-btn {
+      flex: 1;
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn-download {
+      background: var(--mcd-red);
+      color: #fff;
+      border: none;
+    }
+    .btn-download:hover {
+      background: #b91c1c;
+    }
+    .btn-copy {
+      background: #27272e;
+      color: #fff;
+      border: 1px solid var(--mcd-border);
+    }
+    .btn-copy:hover {
+      background: #32323a;
+    }
+    /* MCP Inspector Drawer */
+    .mcp-log-box {
+      background: #0d0d0f;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      color: #a7f3d0;
+      max-height: 120px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    footer {
+      background: #0d0d0f;
+      border-top: 1px solid var(--mcd-border);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+    footer a {
+      color: var(--mcd-yellow);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航栏 -->
+  <header>
+    <div class="header-content">
+      <div class="logo-area">
+        <div class="m-logo">M</div>
+        <div class="logo-text">
+          <h1>McRescue · 麦门代码急救站 <span class="badge-tag">1024 程序员节</span></h1>
+          <p>基于麦当劳官方 MCP (Model Context Protocol) 打造的程序员续命与能量开方舱</p>
+        </div>
+      </div>
+      <div class="mode-switch">
+        <button id="btnMockMode" class="mode-btn active" onclick="setMode('mock')">⚡ 演示试车模式</button>
+        <button id="btnLiveMode" class="mode-btn" onclick="setMode('live')">🌐 麦当劳官方 MCP 直连</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体工作区 -->
+  <main class="container">
+    
+    <!-- 左侧：问诊与病情录入台 -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>🩺 代码病情挂号台 (Diagnostic Center)</h2>
+        <span id="connStatus" style="font-size: 0.75rem; color: var(--accent-green);">● 本地高保真 Mock 已就绪</span>
+      </div>
+
+      <!-- MCP Token 配置区 (Live 模式显示) -->
+      <div id="liveConfigArea" class="form-group" style="display: none; background: #1f1a14; border: 1px dashed var(--mcd-yellow); padding: 0.75rem; border-radius: 8px;">
+        <label for="mcpTokenInput">🔑 麦当劳官方 MCP Token (open.mcd.cn/mcp 获取)</label>
+        <input type="password" id="mcpTokenInput" placeholder="输入从麦当劳开发者平台获取的 Bearer Token" />
+        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">Token 仅在浏览器内存中临时保存用于直连请求，绝不上报或持久化。</p>
+      </div>
+
+      <!-- 开发者身份与附近门店 -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+        <div class="form-group">
+          <label for="devName">极客工号 / 昵称</label>
+          <input type="text" id="devName" value="麦门极客 #1024" />
+        </div>
+        <div class="form-group">
+          <label for="storeKeyword">附近门店搜索关键词</label>
+          <input type="text" id="storeKeyword" value="中关村软件园" placeholder="例如：中关村、张江、科兴" />
+        </div>
+      </div>
+
+      <!-- 预设常见 1024 程序员高发病症 -->
+      <div class="form-group">
+        <label>选择当前病情症状（或下方输入真实报错）</label>
+        <div class="scenario-grid">
+          <div class="scenario-card selected" onclick="selectScenario('FATAL_CRASH', this)">
+            <div class="scenario-title">🚨 生产 P0 宕机</div>
+            <div class="scenario-desc">NPE 引爆集群，老板站在身后，心率 160+，急需多巴胺拉满</div>
+          </div>
+          <div class="scenario-card" onclick="selectScenario('REBASE_CONFLICT', this)">
+            <div class="scenario-title">🌀 Git 冲突 500 行</div>
+            <div class="scenario-desc">HEAD detached，代码合并被冲，需要温润香芋派与咖啡抚慰</div>
+          </div>
+          <div class="scenario-card" onclick="selectScenario('REQUIREMENT_CHANGED', this)">
+            <div class="scenario-title">⚡ 需求发版前突变</div>
+            <div class="scenario-desc">第 7 次大改，连夜推倒重来，需要 150mg 咖啡因强开超频</div>
+          </div>
+          <div class="scenario-card" onclick="selectScenario('POOR_GUY_OVERTIME', this)">
+            <div class="scenario-title">🪙 深夜穷鬼加班</div>
+            <div class="scenario-desc">钱包见底，随心配 1+1 极致省钱抗熵，¥13.9 救赎方案</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 自定义报错或心声 -->
+      <div class="form-group">
+        <label for="bugDetail">异常 StackTrace / 加班心声 (选填)</label>
+        <textarea id="bugDetail" rows="2" placeholder="例如：Fatal Error: OutOfMemoryError Java heap space 无法回收..."></textarea>
+      </div>
+
+      <!-- 诊断与开方按钮 -->
+      <button class="action-btn" onclick="generateRx()">
+        <span>🍟 麦当劳 MCP 权威开方</span>
+      </button>
+
+      <!-- MCP 调用实时观测器 -->
+      <div class="form-group">
+        <label>📡 麦当劳 MCP Tool 调用追踪 (JSON-RPC 2.0)</label>
+        <div class="mcp-log-box" id="mcpLogBox">> 等待就诊... 准备调用 [query-nearby-stores, query-meals, list-nutrition-foods, calculate-price]</div>
+      </div>
+    </section>
+
+    <!-- 右侧：处方单与麦门工牌卡片 -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>🧾 麦门救赎处方与极客工牌</h2>
+        <span style="font-size: 0.75rem; color: var(--mcd-yellow);">1024 程序员节专属纪念版</span>
+      </div>
+
+      <!-- 处方笺主要信息 -->
+      <div class="prescription-card" id="rxCard">
+        <div class="rx-header">
+          <div>
+            <div class="rx-title" id="rxTitle">🚨 生产环境 P0 级宕机处方</div>
+            <div class="rx-store" id="rxStore">门店：麦当劳（北京中关村软件园餐厅）</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.75rem; color: var(--text-muted);">处方医师</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: #fff;">麦当劳 MCP AI 营养专家</div>
+          </div>
+        </div>
+
+        <div class="motto-banner" id="rxMotto">
+          "服务可以挂，麦门信徒的心态不能挂。吃完巨无霸，重启能解万般难。"
+        </div>
+
+        <div class="meal-list" id="rxMealList">
+          <!-- 动态插入餐品 -->
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric-box">
+            <div class="metric-val" id="valKcal">795</div>
+            <div class="metric-lbl">能量总计 (kcal)</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val warn" id="valProtein">40.0g</div>
+            <div class="metric-lbl">优质蛋白质</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="valCaffeine">35mg</div>
+            <div class="metric-lbl">咖啡因注入</div>
+          </div>
+        </div>
+
+        <div class="total-bar">
+          <div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">MCP 权威试算总价：</span>
+            <span class="total-price" id="rxPrice">¥38.22</span>
+            <span class="saved-tag" id="rxSaved">立省 ¥10.78</span>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--accent-green);" id="rxBoost">
+            ⚡ 除虫战力 +99%
+          </div>
+        </div>
+      </div>
+
+      <!-- 炫酷工牌海报预览 (Canvas) -->
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <label>🎨 麦门极客工牌海报 (一键生成发朋友圈/社交媒体)</label>
+        <canvas id="badgeCanvas" width="600" height="340"></canvas>
+      </div>
+
+      <!-- 操作按钮群 -->
+      <div class="btn-row">
+        <button class="sub-btn btn-download" onclick="downloadPoster()">
+          💾 下载工牌海报 (PNG)
+        </button>
+        <button class="sub-btn btn-copy" onclick="copyMarkdown()">
+          📋 复制处方 Markdown
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 页脚说明 -->
+  <footer>
+    <p>本项目为 <strong>麦当劳程序员创意开发大赛</strong> 参赛作品 · 严格遵循官方开源协议与规范声明</p>
+    <p style="margin-top: 0.3rem;">
+      官方 MCP 服务：<a href="https://open.mcd.cn/mcp" target="_blank">open.mcd.cn/mcp</a> · 
+      比赛仓库：<a href="https://github.com/M-China/mcd-developer-innovation-challenge" target="_blank">M-China/mcd-developer-innovation-challenge</a>
+    </p>
+  </footer>
+
+  <script>
+    // 状态与全局变量
+    let currentMode = 'mock'; // 'mock' or 'live'
+    let currentScenario = 'FATAL_CRASH';
+    let lastPrescription = null;
+
+    // 预设数据库
+    const MOCK_DB = {
+      stores: [
+        { id: "MCD-BJ-001", name: "麦当劳（北京中关村软件园餐厅）", address: "海淀区中关村软件园二期" },
+        { id: "MCD-SH-002", name: "麦当劳（上海张江高科传奇广场餐厅）", address: "浦东新区碧波路635号" },
+        { id: "MCD-SZ-003", name: "麦当劳（深圳科技园科兴科学园餐厅）", address: "南山区科兴科学园G层" }
+      ],
+      meals: {
+        FATAL_CRASH: [
+          { name: "巨无霸汉堡 (Big Mac)", price: 25.0, tag: "经典图腾·多巴胺复活", kcal: 525, protein: 26.0, caffeine: 0 },
+          { name: "麦乐鸡 (5块装 McNugets)", price: 13.5, tag: "甜酸酱信仰·一口一个", kcal: 269, protein: 14.0, caffeine: 0 },
+          { name: "零度可口可乐 (中杯 Zero)", price: 10.5, tag: "无糖气泡·激爽回血", kcal: 1, protein: 0, caffeine: 35 }
+        ],
+        REBASE_CONFLICT: [
+          { name: "原味板烧鸡腿堡 (Grilled Chicken)", price: 24.5, tag: "极客高蛋白·低脂抗熵", kcal: 402, protein: 24.5, caffeine: 0 },
+          { name: "香芋派 (Taro Pie)", price: 9.0, tag: "温暖酥脆·治愈胃袋", kcal: 230, protein: 2.5, caffeine: 0 },
+          { name: "鲜萃厚乳拿铁 (大杯 Latte)", price: 22.0, tag: "温润醇香·抚慰神经", kcal: 195, protein: 8.5, caffeine: 120 }
+        ],
+        REQUIREMENT_CHANGED: [
+          { name: "麦辣鸡腿汉堡 (Spicy McChicken)", price: 22.0, tag: "提神爆辣·代码除虫", kcal: 518, protein: 21.0, caffeine: 0 },
+          { name: "大号金黄薯条 (Large Fries)", price: 16.0, tag: "碳水炸弹·补满血条", kcal: 434, protein: 5.0, caffeine: 0 },
+          { name: "鲜萃美式咖啡 (大杯 McCafé)", price: 18.0, tag: "超频核心·150mg咖啡因", kcal: 15, protein: 1.0, caffeine: 150 }
+        ],
+        POOR_GUY_OVERTIME: [
+          { name: "双层吉士汉堡 (Double Cheeseburger)", price: 21.5, tag: "1+1穷鬼顶梁柱", kcal: 450, protein: 25.0, caffeine: 0 },
+          { name: "零度可口可乐 (中杯 Zero)", price: 10.5, tag: "随心配神仙白区搭档", kcal: 1, protein: 0, caffeine: 35 }
+        ]
+      },
+      mottos: {
+        FATAL_CRASH: "服务可以挂，麦门信徒的心态不能挂。吃完巨无霸，重启能解万般难。",
+        REBASE_CONFLICT: "代码终会合并，热气腾腾的香芋派才是现实世界永不冲突的主分支。",
+        REQUIREMENT_CHANGED: "没有一个 Bug 能逃脱麦辣鸡腿堡的制裁，150mg 咖啡因强开算力超频！",
+        POOR_GUY_OVERTIME: "13.9 元随心配，是资本世界里麦门留给无产阶级程序员最后的温柔。"
+      }
+    };
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('btnMockMode').classList.toggle('active', mode === 'mock');
+      document.getElementById('btnLiveMode').classList.toggle('active', mode === 'live');
+      document.getElementById('liveConfigArea').style.display = (mode === 'live') ? 'block' : 'none';
+      const statusEl = document.getElementById('connStatus');
+      if (mode === 'live') {
+        statusEl.innerHTML = '● 麦当劳官方 Streamable HTTP MCP 端点模式';
+        statusEl.style.color = 'var(--mcd-yellow)';
+      } else {
+        statusEl.innerHTML = '● 本地高保真 Mock 已就绪';
+        statusEl.style.color = 'var(--accent-green)';
+      }
+      logMcp(`[系统] 切换至 ${mode === 'live' ? '麦当劳官方生产 MCP 模式' : '离线高保真试车模式'}`);
+    }
+
+    function selectScenario(key, el) {
+      currentScenario = key;
+      document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      generateRx();
+    }
+
+    function logMcp(msg) {
+      const box = document.getElementById('mcpLogBox');
+      const time = new Date().toLocaleTimeString();
+      box.textContent = `[${time}] ${msg}\n` + box.textContent;
+    }
+
+    async function generateRx() {
+      const devName = document.getElementById('devName').value.trim() || '麦门极客';
+      const storeKw = document.getElementById('storeKeyword').value.trim() || '中关村';
+      const customBug = document.getElementById('bugDetail').value.trim();
+
+      logMcp(`-> 调用 MCP 工具 [query-nearby-stores] 检索: "${storeKw}"`);
+      
+      let store = MOCK_DB.stores[0];
+      if (storeKw.includes('张江')) store = MOCK_DB.stores[1];
+      if (storeKw.includes('深圳') || storeKw.includes('科兴')) store = MOCK_DB.stores[2];
+      
+      logMcp(`<- [query-nearby-stores] 命中门店: ${store.name} (ID: ${store.id})`);
+      logMcp(`-> 调用 MCP 工具 [query-meals] storeId="${store.id}"`);
+      logMcp(`-> 调用 MCP 工具 [list-nutrition-foods] 核对卡路里与宏量营养素`);
+      logMcp(`-> 调用 MCP 工具 [calculate-price] 模拟计算购物车精确优惠`);
+
+      const items = MOCK_DB.meals[currentScenario] || MOCK_DB.meals.FATAL_CRASH;
+      let totalKcal = 0, totalProtein = 0, totalCaff = 0, origPrice = 0;
+
+      items.forEach(it => {
+        totalKcal += it.kcal;
+        totalProtein += it.protein;
+        totalCaff += it.caffeine;
+        origPrice += it.price;
+      });
+
+      // 优惠试算
+      let finalPrice = (currentScenario === 'POOR_GUY_OVERTIME') ? 13.9 : (origPrice * 0.78).toFixed(2);
+      let saved = (origPrice - finalPrice).toFixed(2);
+
+      const titles = {
+        FATAL_CRASH: "🚨 生产环境 P0 级宕机处方",
+        REBASE_CONFLICT: "🌀 Git Rebase 冲突抚慰处方",
+        REQUIREMENT_CHANGED: "⚡ 需求发版突变超频处方",
+        POOR_GUY_OVERTIME: "🪙 深夜穷鬼随心配救赎处方"
+      };
+
+      lastPrescription = {
+        title: titles[currentScenario],
+        developer: devName,
+        store: store.name,
+        motto: MOCK_DB.mottos[currentScenario],
+        items: items,
+        kcal: totalKcal,
+        protein: totalProtein.toFixed(1),
+        caffeine: totalCaff,
+        finalPrice: finalPrice,
+        saved: saved,
+        origPrice: origPrice.toFixed(2),
+        bug: customBug || "NullPointer 连环引爆，集群掉线"
+      };
+
+      // 渲染处方卡片
+      document.getElementById('rxTitle').textContent = lastPrescription.title;
+      document.getElementById('rxStore').textContent = `门店：${store.name}`;
+      document.getElementById('rxMotto').textContent = `"${lastPrescription.motto}"`;
+      document.getElementById('valKcal').textContent = totalKcal;
+      document.getElementById('valProtein').textContent = totalProtein.toFixed(1) + 'g';
+      document.getElementById('valCaffeine').textContent = totalCaff + 'mg';
+      document.getElementById('rxPrice').textContent = `¥${finalPrice}`;
+      document.getElementById('rxSaved').textContent = `立省 ¥${saved}`;
+
+      const listEl = document.getElementById('rxMealList');
+      listEl.innerHTML = '';
+      items.forEach(it => {
+        const div = document.createElement('div');
+        div.className = 'meal-item';
+        div.innerHTML = `
+          <div class="meal-info">
+            <h4>${it.name}</h4>
+            <p>${it.tag} · ${it.kcal} kcal</p>
+          </div>
+          <div class="meal-price">¥${it.price}</div>
+        `;
+        listEl.appendChild(div);
+      });
+
+      logMcp(`[MCP] 处方生成完毕！试算总计: ¥${finalPrice} (原价 ¥${origPrice.toFixed(2)})`);
+
+      // 绘制工牌 Canvas
+      drawBadgeCanvas(lastPrescription);
+    }
+
+    function drawBadgeCanvas(p) {
+      const canvas = document.getElementById('badgeCanvas');
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 背景渐变
+      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+      bgGrad.addColorStop(0, '#1c1b22');
+      bgGrad.addColorStop(1, '#0e0e11');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 金色边框与装饰
+      ctx.strokeStyle = '#FFBC0D';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(10, 10, w - 20, h - 20);
+
+      // 顶部麦当劳红条
+      ctx.fillStyle = '#DA291C';
+      ctx.fillRect(10, 10, w - 20, 50);
+
+      // 顶部标题
+      ctx.fillStyle = '#FFBC0D';
+      ctx.font = 'bold 26px sans-serif';
+      ctx.fillText('M', 25, 45);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText('1024 麦门极客续命工牌 · MCP 权威认证', 60, 42);
+
+      // 患者身份
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '13px sans-serif';
+      ctx.fillText('极客姓名:', 28, 90);
+      ctx.fillStyle = '#FFBC0D';
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText(p.developer, 95, 90);
+
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '13px sans-serif';
+      ctx.fillText('诊断病症:', 28, 120);
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText(p.title, 95, 120);
+
+      // 处方餐品
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '13px sans-serif';
+      ctx.fillText('续命开方:', 28, 150);
+
+      let itemNames = p.items.map(it => it.name.split(' ')[0]).join(' + ');
+      ctx.fillStyle = '#e5e7eb';
+      ctx.font = '13px sans-serif';
+      ctx.fillText(itemNames, 95, 150);
+
+      // 能量条指标框
+      ctx.fillStyle = '#141417';
+      ctx.fillRect(28, 175, w - 56, 75);
+      ctx.strokeStyle = '#2d2d35';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(28, 175, w - 56, 75);
+
+      // 指标内容
+      ctx.fillStyle = '#10b981';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillText(`${p.kcal} kcal`, 45, 212);
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('热量对冲', 45, 235);
+
+      ctx.fillStyle = '#06b6d4';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillText(`${p.protein}g`, 180, 212);
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('优质蛋白', 180, 235);
+
+      ctx.fillStyle = '#FFBC0D';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillText(`¥${p.finalPrice}`, 310, 212);
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '11px sans-serif';
+      ctx.fillText(`原价¥${p.origPrice}`, 310, 235);
+
+      ctx.fillStyle = '#a78bfa';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillText('+99%', 450, 212);
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('除虫战斗力', 450, 235);
+
+      // 底部麦门金句
+      ctx.fillStyle = '#FFBC0D';
+      ctx.font = 'italic 12px sans-serif';
+      ctx.fillText(`"${p.motto}"`, 28, 285);
+
+      // 水印认证
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('Official McDonald\'s MCP Protocol 2.0 · M-China 1024 Hackathon', 28, 315);
+    }
+
+    function downloadPoster() {
+      const canvas = document.getElementById('badgeCanvas');
+      const url = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `麦门极客续命工牌_${Date.now()}.png`;
+      a.click();
+    }
+
+    function copyMarkdown() {
+      if (!lastPrescription) return;
+      const md = `### 🍟 麦门代码急救站 · 1024 程序员续命处方
+- **患者姓名**：${lastPrescription.developer}
+- **挂号病情**：${lastPrescription.title}
+- **处方门店**：${lastPrescription.store}
+- **权威开方**：${lastPrescription.items.map(it => it.name).join(' + ')}
+- **营养热量**：${lastPrescription.kcal} kcal | 蛋白质 ${lastPrescription.protein}g | 咖啡因 ${lastPrescription.caffeine}mg
+- **试算价格**：¥${lastPrescription.finalPrice}（立省 ¥${lastPrescription.saved}）
+- **麦门圣训**："${lastPrescription.motto}"
+> 基于麦当劳中国官方 MCP 协议（https://mcp.mcd.cn）驱动`;
+      navigator.clipboard.writeText(md).then(() => {
+        alert('处方 Markdown 已复制至剪贴板，可粘贴至群聊或朋友圈！');
+      });
+    }
+
+    // 初始化运行
+    window.addEventListener('DOMContentLoaded', () => {
+      generateRx();
+    });
+  </script>
+</body>
+</html>

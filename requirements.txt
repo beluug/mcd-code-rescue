@@ -1,0 +1,4 @@
+# McRescue 麦门代码急救站依赖项
+# 本项目核心功能基于 Python 标准库 (urllib, json, argparse, os, sys) 零依赖运行！
+# 可选安装 requests 用于更高级的网络调试：
+# requests>=2.28.0
