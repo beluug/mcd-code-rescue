@@ -9,13 +9,13 @@
     :root {
       --mcd-red: #DA291C;
       --mcd-yellow: #FFBC0D;
-      --bg: #0f0f12;
-      --surface: #18181c;
-      --surface-hover: #222228;
-      --border: #2c2c34;
+      --bg: #0d0d10;
+      --card-bg: #16161a;
+      --border: #26262e;
       --text: #ffffff;
-      --text-sub: #9ca3af;
+      --text-muted: #94a3b8;
       --green: #10b981;
+      --blue: #38bdf8;
     }
     * {
       box-sizing: border-box;
@@ -29,21 +29,21 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
-    /* 顶部简约导航 */
+    /* 紧凑顶部导航 */
     header {
-      background: rgba(24, 24, 28, 0.85);
-      backdrop-filter: blur(16px);
+      background: rgba(22, 22, 26, 0.95);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      padding: 0.65rem 1.5rem;
       position: sticky;
       top: 0;
       z-index: 50;
-      padding: 0.85rem 1.5rem;
     }
     .header-wrap {
-      max-width: 960px;
+      max-width: 1240px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -52,965 +52,791 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
-    .m-badge {
-      width: 36px;
-      height: 36px;
+    .m-logo {
+      width: 32px;
+      height: 32px;
       background: var(--mcd-yellow);
       color: var(--mcd-red);
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(255, 188, 13, 0.35);
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(255, 188, 13, 0.3);
     }
-    .brand-title {
-      font-size: 1.15rem;
+    .brand-name {
+      font-size: 1.1rem;
       font-weight: 800;
-      letter-spacing: -0.3px;
     }
-    .brand-tag {
-      font-size: 0.7rem;
+    .tag-1024 {
       background: rgba(218, 41, 28, 0.2);
       color: #ff6b6b;
       border: 1px solid rgba(218, 41, 28, 0.4);
-      padding: 0.1rem 0.5rem;
-      border-radius: 9999px;
-      margin-left: 0.4rem;
-      font-weight: 600;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
     }
 
-    /* 页面主容器 - 极简聚焦流式布局 */
-    main {
-      max-width: 960px;
-      margin: 2rem auto;
+    /* 核心左右两栏式布局 (不换屏、无冗余滑动) */
+    .dashboard {
+      max-width: 1240px;
+      margin: 1.25rem auto;
       padding: 0 1rem;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1.75rem;
-      flex: 1;
-    }
-
-    /* 模块卡片标准容器 */
-    .section-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    }
-
-    .step-label {
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--mcd-yellow);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .step-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 0.75rem;
-    }
-
-    /* =========================================
-       STEP 1: 极度突出的 MCP 连接中枢
-       ========================================= */
-    .mcp-gateway {
-      border: 2px solid var(--border);
-      transition: border-color 0.3s;
-    }
-    .mcp-gateway.live-active {
-      border-color: var(--mcd-yellow);
-      background: linear-gradient(180deg, rgba(255, 188, 13, 0.04) 0%, rgba(24, 24, 28, 1) 100%);
-    }
-    .mcp-tabs {
-      display: flex;
-      background: #101013;
-      padding: 0.3rem;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      margin-bottom: 1.25rem;
-    }
-    .mcp-tab-btn {
-      flex: 1;
-      padding: 0.65rem;
-      border: none;
-      background: transparent;
-      color: var(--text-sub);
-      font-size: 0.9rem;
-      font-weight: 700;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .mcp-tab-btn.active {
-      background: var(--surface-hover);
-      color: #fff;
-    }
-    .mcp-tab-btn.active.gold {
-      background: var(--mcd-yellow);
-      color: #000;
-      box-shadow: 0 2px 10px rgba(255, 188, 13, 0.3);
-    }
-
-    /* Token 输入区高亮展示 */
-    .token-box {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      background: #111114;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1rem;
-    }
-    .token-box label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #e5e7eb;
-      display: flex;
-      justify-content: space-between;
-    }
-    .token-input-row {
-      display: flex;
-      gap: 0.75rem;
-    }
-    .token-input {
-      flex: 1;
-      background: #1a1a20;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      font-size: 0.95rem;
-      color: #fff;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .token-input:focus {
-      border-color: var(--mcd-yellow);
-    }
-    .btn-connect {
-      background: var(--mcd-yellow);
-      color: #000;
-      font-weight: 800;
-      padding: 0 1.5rem;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-connect:hover {
-      filter: brightness(1.1);
-    }
-    .mcp-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      color: var(--green);
-      font-weight: 600;
-      margin-top: 0.4rem;
-    }
-
-    /* =========================================
-       STEP 2: 一键挂号病情 (清爽大卡片)
-       ========================================= */
-    .symptom-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-    .symptom-chip {
-      background: #121215;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 1rem 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-    .symptom-chip:hover {
-      border-color: var(--mcd-yellow);
-      transform: translateY(-2px);
-    }
-    .symptom-chip.selected {
-      border-color: var(--mcd-yellow);
-      background: rgba(255, 188, 13, 0.08);
-      box-shadow: 0 0 12px rgba(255, 188, 13, 0.18);
-    }
-    .symptom-icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.2rem;
-    }
-    .symptom-name {
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: #fff;
-    }
-    .symptom-desc {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-    }
-
-    /* 辅助输入行 */
-    .meta-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 0.75rem;
+      gap: 1.25rem;
+      flex: 1;
+      align-items: stretch;
     }
-    @media (max-width: 600px) {
-      .meta-row { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .dashboard { grid-template-columns: 1fr; }
     }
-    .meta-input {
-      background: #121215;
+
+    /* 卡片通用 */
+    .col-card {
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.65rem 0.85rem;
-      color: #fff;
-      font-size: 0.9rem;
-      outline: none;
-      width: 100%;
-    }
-    .meta-input:focus {
-      border-color: var(--mcd-yellow);
-    }
-
-    /* 主操作按钮：大而聚焦 */
-    .btn-prescribe {
-      background: linear-gradient(135deg, var(--mcd-yellow) 0%, #f59e0b 100%);
-      color: #000;
-      font-weight: 900;
-      font-size: 1.15rem;
-      padding: 1rem;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 20px rgba(255, 188, 13, 0.35);
-      transition: all 0.2s;
-      margin-top: 1rem;
-    }
-    .btn-prescribe:hover {
-      filter: brightness(1.08);
-      transform: translateY(-2px);
-    }
-
-    /* =========================================
-       STEP 3: 处方与工牌海报呈现
-       ========================================= */
-    .rx-result-wrap {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1.5rem;
-    }
-    @media (max-width: 820px) {
-      .rx-result-wrap { grid-template-columns: 1fr; }
-    }
-
-    /* 处方单明细 */
-    .rx-sheet {
-      background: #111114;
-      border: 2px solid var(--mcd-yellow);
       border-radius: 12px;
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
-    .rx-header-row {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px dashed var(--border);
-      padding-bottom: 0.75rem;
-    }
-    .rx-title-text {
-      font-size: 1.1rem;
+    .card-title {
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--mcd-yellow);
-    }
-    .rx-store-text {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-    }
-    .rx-quote {
-      background: rgba(218, 41, 28, 0.12);
-      border-left: 3px solid var(--mcd-red);
-      padding: 0.5rem 0.75rem;
-      font-size: 0.82rem;
-      color: #fca5a5;
-      font-style: italic;
-      border-radius: 0 6px 6px 0;
-    }
-    .rx-items-list {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .rx-item-row {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      background: #18181e;
-      padding: 0.5rem 0.75rem;
-      border-radius: 8px;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
     }
-    .rx-item-name {
+
+    /* 左侧：MCP 接入模式切换器 */
+    .mcp-mode-bar {
+      display: flex;
+      background: #0d0d10;
+      padding: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      gap: 0.25rem;
+    }
+    .mode-tab {
+      flex: 1;
+      padding: 0.5rem;
       font-size: 0.85rem;
       font-weight: 700;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mode-tab.active {
+      background: var(--mcd-yellow);
+      color: #000;
+      box-shadow: 0 2px 8px rgba(255, 188, 13, 0.25);
+    }
+
+    /* Token 输入区 (直截了当，紧贴其下) */
+    .token-panel {
+      background: #101014;
+      border: 1.5px solid var(--mcd-yellow);
+      border-radius: 8px;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .token-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .token-field {
+      flex: 1;
+      background: #191920;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.85rem;
       color: #fff;
+      outline: none;
     }
-    .rx-item-sub {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-    }
-    .rx-item-price {
+    .token-field:focus { border-color: var(--mcd-yellow); }
+    .btn-token-save {
+      background: var(--mcd-yellow);
+      color: #000;
       font-weight: 800;
-      color: var(--mcd-yellow);
-      font-size: 0.95rem;
+      padding: 0 1rem;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
     }
-    .rx-stats-row {
+    .token-tips {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+    .token-tips a { color: var(--mcd-yellow); text-decoration: none; }
+
+    /* 病情单选方块 */
+    .symptom-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.5rem;
-      background: #16161b;
-      padding: 0.75rem;
+    }
+    @media (max-width: 600px) {
+      .symptom-cards { grid-template-columns: 1fr 1fr; }
+    }
+    .s-box {
+      background: #111115;
+      border: 1.5px solid var(--border);
       border-radius: 8px;
+      padding: 0.65rem 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .s-box:hover { border-color: var(--mcd-yellow); }
+    .s-box.selected {
+      border-color: var(--mcd-yellow);
+      background: rgba(255, 188, 13, 0.08);
+    }
+    .s-icon { font-size: 1.25rem; margin-bottom: 0.15rem; }
+    .s-name { font-size: 0.85rem; font-weight: 800; color: #fff; }
+    .s-brief { font-size: 0.7rem; color: var(--text-muted); }
+
+    /* 辅助字段 (工号与门店) */
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .input-mini {
+      background: #111115;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.82rem;
+      color: #fff;
+      outline: none;
+      width: 100%;
+    }
+    .input-mini:focus { border-color: var(--mcd-yellow); }
+    .lbl-mini {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+
+    /* 开方按钮 */
+    .btn-submit {
+      background: linear-gradient(135deg, var(--mcd-yellow) 0%, #f59e0b 100%);
+      color: #000;
+      font-weight: 900;
+      font-size: 1.05rem;
+      padding: 0.85rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 188, 13, 0.3);
+      transition: all 0.2s;
+      margin-top: auto;
+    }
+    .btn-submit:hover { filter: brightness(1.08); }
+
+    /* 右侧：处方结果 */
+    .rx-box {
+      background: #111115;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .rx-headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 0.5rem;
+    }
+    .rx-name { font-size: 0.95rem; font-weight: 800; color: var(--mcd-yellow); }
+    .rx-store { font-size: 0.72rem; color: var(--text-muted); }
+
+    .rx-dish-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .rx-dish {
+      display: flex;
+      justify-content: space-between;
+      background: #18181e;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .rx-dish-price { font-weight: 800; color: var(--mcd-yellow); }
+
+    /* 3 个营养数字 */
+    .rx-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+      background: #18181e;
+      padding: 0.5rem;
+      border-radius: 6px;
       text-align: center;
     }
-    .rx-stat-num {
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: var(--green);
-    }
-    .rx-stat-lbl {
-      font-size: 0.7rem;
-      color: var(--text-sub);
-    }
-    .rx-total-row {
+    .stat-val { font-size: 1rem; font-weight: 900; color: var(--green); }
+    .stat-lbl { font-size: 0.68rem; color: var(--text-muted); }
+
+    .rx-footer-price {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-top: 0.4rem;
       border-top: 1px solid var(--border);
-      padding-top: 0.75rem;
     }
-    .rx-total-price {
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: var(--mcd-yellow);
-    }
-    .rx-saved-pill {
+    .price-num { font-size: 1.25rem; font-weight: 900; color: var(--mcd-yellow); }
+    .saved-chip {
       background: rgba(16, 185, 129, 0.15);
       color: var(--green);
-      font-size: 0.75rem;
-      padding: 0.15rem 0.45rem;
+      font-size: 0.72rem;
+      padding: 0.1rem 0.4rem;
       border-radius: 4px;
       font-weight: 700;
-      margin-left: 0.4rem;
+      margin-left: 0.3rem;
     }
 
-    /* 工牌画布与操作 */
-    .badge-preview-area {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    /* Canvas 工牌海报 */
     #badgeCanvas {
       width: 100%;
       height: auto;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
       display: block;
     }
-    .action-row {
+    .btn-actions {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
-    .btn-act {
+    .act-btn {
       flex: 1;
-      padding: 0.75rem;
-      border-radius: 8px;
+      padding: 0.65rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
       font-weight: 800;
-      font-size: 0.9rem;
-      cursor: pointer;
       border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
+      cursor: pointer;
       transition: all 0.2s;
     }
-    .btn-act-red {
-      background: var(--mcd-red);
-      color: #fff;
-    }
-    .btn-act-red:hover {
-      background: #b91c1c;
-    }
-    .btn-act-gray {
-      background: #272730;
-      color: #fff;
-      border: 1px solid var(--border);
-    }
-    .btn-act-gray:hover {
-      background: #32323e;
-    }
+    .btn-red { background: var(--mcd-red); color: #fff; }
+    .btn-red:hover { background: #b91c1c; }
+    .btn-gray { background: #22222a; color: #fff; border: 1px solid var(--border); }
+    .btn-gray:hover { background: #2c2c36; }
 
-    /* 折叠式的 MCP 原始调用审计抽屉（不干扰主体，但随时可查） */
-    details.mcp-drawer {
-      background: #111114;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75rem 1rem;
+    /* 底部收起式调试日志 (极度低调，不打扰核心) */
+    details.debug-drawer {
+      max-width: 1240px;
+      margin: 0 auto 1.5rem auto;
+      padding: 0 1rem;
+      width: 100%;
     }
-    details.mcp-drawer summary {
+    details.debug-drawer summary {
       cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-sub);
+      font-size: 0.75rem;
+      color: var(--text-muted);
       user-select: none;
     }
-    details.mcp-drawer summary:hover {
-      color: var(--mcd-yellow);
-    }
-    .log-content {
-      margin-top: 0.75rem;
+    details.debug-drawer summary:hover { color: var(--mcd-yellow); }
+    .log-terminal {
       background: #08080a;
+      border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.75rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.75rem;
+      padding: 0.6rem;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.72rem;
       color: #34d399;
-      max-height: 120px;
+      max-height: 90px;
       overflow-y: auto;
+      margin-top: 0.4rem;
       white-space: pre-wrap;
     }
 
     footer {
-      background: #09090b;
+      background: #08080a;
       border-top: 1px solid var(--border);
-      padding: 1.5rem;
+      padding: 1rem;
       text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      margin-top: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
-    footer a {
-      color: var(--mcd-yellow);
-      text-decoration: none;
-    }
+    footer a { color: var(--mcd-yellow); text-decoration: none; }
   </style>
 </head>
 <body>
 
-  <!-- 顶部轻量级导航 -->
   <header>
     <div class="header-wrap">
       <div class="brand">
-        <div class="m-badge">M</div>
+        <div class="m-logo">M</div>
         <div>
-          <span class="brand-title">McRescue · 麦门代码急救站</span>
-          <span class="brand-tag">1024 程序员节</span>
+          <span class="brand-name">McRescue · 麦门代码急救站</span>
+          <span class="tag-1024">1024 程序员节</span>
         </div>
       </div>
-      <div style="font-size: 0.8rem; color: var(--text-sub);">
-        麦当劳官方 MCP 协议支持
+      <div style="font-size: 0.75rem; color: var(--text-muted);">
+        官方 MCP 驱动 (mcp.mcd.cn)
       </div>
     </div>
   </header>
 
-  <!-- 主体工作台 -->
-  <main>
+  <!-- 经典左右两栏布局：一目了然，无须向下滚动 -->
+  <main class="dashboard">
 
-    <!-- STEP 1: 极度清晰的 MCP 中枢连接台（直接突出，一目了然） -->
-    <section class="section-card mcp-gateway" id="mcpGatewayCard">
-      <div class="step-label">STEP 1 · 接入麦当劳 MCP 服务中枢</div>
-      <div class="step-title">选择连接模式与 Token 鉴权</div>
-
-      <div class="mcp-tabs">
-        <button id="tabMock" class="mcp-tab-btn active gold" onclick="switchMode('mock')">
-          ⚡ 演示试车模式 (开箱即用，免 Token)
-        </button>
-        <button id="tabLive" class="mcp-tab-btn" onclick="switchMode('live')">
-          🔑 麦当劳官方 Token 直连 (Live 生产中枢)
-        </button>
+    <!-- 左栏：问诊挂号台 (控制输入) -->
+    <section class="col-card">
+      <div class="card-title">
+        <span>🩺 代码病情挂号与 MCP 接入</span>
+        <span id="connTag" style="font-size: 0.72rem; color: var(--green);">● 离线测试就绪</span>
       </div>
 
-      <!-- Live 模式下展开的大输入框，绝不藏匿 -->
-      <div id="liveTokenArea" class="token-box" style="display: none;">
-        <label for="mcpTokenInput">
-          <span>麦当劳 MCP Bearer Token</span>
-          <a href="https://open.mcd.cn/mcp" target="_blank" style="color: var(--mcd-yellow); font-size: 0.75rem; text-decoration: none;">去 open.mcd.cn/mcp 免费获取 ↗</a>
-        </label>
-        <div class="token-input-row">
-          <input type="password" id="mcpTokenInput" class="token-input" placeholder="输入从麦当劳开放平台申请的 MCP Token (例如: eyJhbGci...)" />
-          <button class="btn-connect" onclick="verifyAndConnect()">确认接入</button>
-        </div>
-        <div style="font-size: 0.72rem; color: var(--text-sub);">
-          🔒 安全原则：Token 仅在浏览器当前会话内存中直连 https://mcp.mcd.cn，绝不上报或持久化存储。
+      <!-- MCP 模式分段选择器 -->
+      <div>
+        <label class="lbl-mini">连接模式</label>
+        <div class="mcp-mode-bar">
+          <button id="tabMock" class="mode-tab active" onclick="setMode('mock')">
+            ⚡ 演示试车模式 (免 Token)
+          </button>
+          <button id="tabLive" class="mode-tab" onclick="setMode('live')">
+            🔑 麦当劳官方 Token 直连
+          </button>
         </div>
       </div>
 
-      <div class="mcp-status-pill" id="mcpStatusText">
-        ● 本地高保真 Mock 中枢已就绪 (直调 5 项官方 MCP 工具标准数据)
-      </div>
-    </section>
-
-    <!-- STEP 2: 极简挂号病情选择 -->
-    <section class="section-card">
-      <div class="step-label">STEP 2 · 挂号你的代码病症</div>
-      <div class="step-title">选择或描述今天的崩溃现场</div>
-
-      <div class="symptom-grid">
-        <div class="symptom-chip selected" onclick="pickSymptom('FATAL_CRASH', this)">
-          <div class="symptom-icon">🚨</div>
-          <div class="symptom-name">生产 P0 宕机</div>
-          <div class="symptom-desc">NPE 引爆集群，老板身后注视</div>
+      <!-- Token 输入条 (仅在 Live 模式展开，醒目聚焦) -->
+      <div id="tokenArea" class="token-panel" style="display: none;">
+        <div class="token-row">
+          <input type="password" id="mcpTokenInput" class="token-field" placeholder="粘贴麦当劳官方 Bearer Token" />
+          <button class="btn-token-save" onclick="saveToken()">确认</button>
         </div>
-        <div class="symptom-chip" onclick="pickSymptom('REBASE_CONFLICT', this)">
-          <div class="symptom-icon">🌀</div>
-          <div class="symptom-name">Git 冲突 500 行</div>
-          <div class="symptom-desc">代码被冲，心慌手抖</div>
-        </div>
-        <div class="symptom-chip" onclick="pickSymptom('REQUIREMENT_CHANGED', this)">
-          <div class="symptom-icon">⚡</div>
-          <div class="symptom-name">发版前突变需求</div>
-          <div class="symptom-desc">连夜重构，键盘火星四溅</div>
-        </div>
-        <div class="symptom-chip" onclick="pickSymptom('POOR_GUY_OVERTIME', this)">
-          <div class="symptom-icon">🪙</div>
-          <div class="symptom-name">深夜穷鬼随心配</div>
-          <div class="symptom-desc">钱包见底，¥13.9 救赎方案</div>
-        </div>
-        <div class="symptom-chip" onclick="pickSymptom('FIT_HACKER', this)">
-          <div class="symptom-icon">💪</div>
-          <div class="symptom-name">极客久坐减脂</div>
-          <div class="symptom-desc">高蛋白板烧去皮，纯黑咖啡</div>
+        <div class="token-tips">
+          <span>直连 https://mcp.mcd.cn (内存传输，绝不上报)</span>
+          <a href="https://open.mcd.cn/mcp" target="_blank">获取 Token ↗</a>
         </div>
       </div>
 
-      <div class="meta-row">
+      <!-- 症状点选 (5 格清爽阵列) -->
+      <div>
+        <label class="lbl-mini">选择当前病症</label>
+        <div class="symptom-cards">
+          <div class="s-box selected" onclick="pick('FATAL_CRASH', this)">
+            <div class="s-icon">🚨</div>
+            <div class="s-name">P0 宕机</div>
+            <div class="s-brief">集群掉线/手抖</div>
+          </div>
+          <div class="s-box" onclick="pick('REBASE_CONFLICT', this)">
+            <div class="s-icon">🌀</div>
+            <div class="s-name">Git 冲突</div>
+            <div class="s-brief">合并被冲/心慌</div>
+          </div>
+          <div class="s-box" onclick="pick('REQUIREMENT_CHANGED', this)">
+            <div class="s-icon">⚡</div>
+            <div class="s-name">需求大改</div>
+            <div class="s-brief">连夜推倒重来</div>
+          </div>
+          <div class="s-box" onclick="pick('POOR_GUY_OVERTIME', this)">
+            <div class="s-icon">🪙</div>
+            <div class="s-name">穷鬼随心配</div>
+            <div class="s-brief">¥13.9 极限抗熵</div>
+          </div>
+          <div class="s-box" onclick="pick('FIT_HACKER', this)">
+            <div class="s-icon">💪</div>
+            <div class="s-name">极客减脂</div>
+            <div class="s-brief">高蛋白板烧+美式</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 昵称与门店 -->
+      <div class="field-row">
         <div>
-          <label style="font-size: 0.8rem; color: var(--text-sub); display: block; margin-bottom: 0.3rem;">极客工号 / 昵称</label>
-          <input type="text" id="devName" class="meta-input" value="麦门极客 #1024" />
+          <label class="lbl-mini">极客工号 / 昵称</label>
+          <input type="text" id="devName" class="input-mini" value="麦门极客 #1024" />
         </div>
         <div>
-          <label style="font-size: 0.8rem; color: var(--text-sub); display: block; margin-bottom: 0.3rem;">附近门店 (MCP 近场检索)</label>
-          <input type="text" id="storeKeyword" class="meta-input" value="中关村软件园" placeholder="例如：中关村、张江、科兴" />
+          <label class="lbl-mini">附近门店检索 (MCP)</label>
+          <input type="text" id="storeKeyword" class="input-mini" value="中关村软件园" />
         </div>
       </div>
 
-      <!-- 核心开方触发 -->
-      <button class="btn-prescribe" onclick="executeRx()">
-        🍟 调用麦当劳 MCP 权威开方
+      <!-- 核心开方动作 -->
+      <button class="btn-submit" onclick="runPrescription()">
+        🍟 麦当劳 MCP 权威开方
       </button>
     </section>
 
-    <!-- STEP 3: 处方与工牌海报呈现 -->
-    <section class="section-card">
-      <div class="step-label">STEP 3 · 麦门救赎处方与极客工牌</div>
-      <div class="step-title">1024 程序员专属续命档案</div>
+    <!-- 右栏：处方呈现与工牌海报 (结果可视化) -->
+    <section class="col-card">
+      <div class="card-title">
+        <span>🧾 麦门救赎处方与工牌海报</span>
+        <span style="font-size: 0.72rem; color: var(--mcd-yellow);">1024 程序员节专属</span>
+      </div>
 
-      <div class="rx-result-wrap">
-        <!-- 处方清单 -->
-        <div class="rx-sheet" id="rxSheet">
-          <div class="rx-header-row">
-            <div>
-              <div class="rx-title-text" id="rxTitle">🚨 生产环境 P0 级宕机处方</div>
-              <div class="rx-store-text" id="rxStore">门店：麦当劳（北京中关村软件园餐厅）</div>
-            </div>
-            <div style="text-align: right;">
-              <span style="font-size: 0.7rem; color: var(--text-sub);">AI 认证医师</span>
-              <div style="font-size: 0.8rem; font-weight: 700; color: #fff;">麦当劳 MCP 中枢</div>
-            </div>
+      <!-- 处方单明细 -->
+      <div class="rx-box">
+        <div class="rx-headline">
+          <span class="rx-name" id="rxTitle">🚨 生产环境 P0 级宕机处方</span>
+          <span class="rx-store" id="rxStore">麦当劳（北京中关村软件园餐厅）</span>
+        </div>
+
+        <div class="rx-dish-list" id="rxList">
+          <!-- 动态注入 -->
+        </div>
+
+        <div class="rx-stats">
+          <div>
+            <div class="stat-val" id="stKcal">795</div>
+            <div class="stat-lbl">热量 (kcal)</div>
           </div>
-
-          <div class="rx-quote" id="rxMotto">
-            "服务可以挂，麦门信徒的心态不能挂。吃完巨无霸，重启能解万般难。"
+          <div>
+            <div class="stat-val" style="color: var(--blue);" id="stProt">40.0g</div>
+            <div class="stat-lbl">优质蛋白质</div>
           </div>
-
-          <div class="rx-items-list" id="rxItems">
-            <!-- 动态注入餐品 -->
-          </div>
-
-          <div class="rx-stats-row">
-            <div>
-              <div class="rx-stat-num" id="statKcal">795</div>
-              <div class="rx-stat-lbl">热量 (kcal)</div>
-            </div>
-            <div>
-              <div class="rx-stat-num" style="color: #38bdf8;" id="statProtein">40.0g</div>
-              <div class="rx-stat-lbl">蛋白质</div>
-            </div>
-            <div>
-              <div class="rx-stat-num" style="color: var(--mcd-yellow);" id="statCaff">35mg</div>
-              <div class="rx-stat-lbl">咖啡因注入</div>
-            </div>
-          </div>
-
-          <div class="rx-total-row">
-            <div>
-              <span style="font-size: 0.8rem; color: var(--text-sub);">官方试算总计：</span>
-              <span class="rx-total-price" id="rxPrice">¥38.22</span>
-              <span class="rx-saved-pill" id="rxSaved">立省 ¥10.78</span>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--green); font-weight: 700;" id="rxBoost">
-              ⚡ 除虫战力 +99%
-            </div>
+          <div>
+            <div class="stat-val" style="color: var(--mcd-yellow);" id="stCaff">35mg</div>
+            <div class="stat-lbl">咖啡因注入</div>
           </div>
         </div>
 
-        <!-- Canvas 工牌海报预览 -->
-        <div class="badge-preview-area">
-          <canvas id="badgeCanvas" width="600" height="340"></canvas>
-          <div class="action-row">
-            <button class="btn-act btn-act-red" onclick="downloadBadge()">
-              💾 下载工牌海报 (PNG)
-            </button>
-            <button class="btn-act btn-act-gray" onclick="copyMarkdown()">
-              📋 复制处方 Markdown
-            </button>
+        <div class="rx-footer-price">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">试算总价：</span>
+            <span class="price-num" id="stPrice">¥38.22</span>
+            <span class="saved-chip" id="stSaved">立省 ¥10.78</span>
           </div>
+          <span style="font-size: 0.75rem; color: var(--green); font-weight: 800;">除虫战力 +99%</span>
+        </div>
+      </div>
+
+      <!-- Canvas 工牌实时海报 -->
+      <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+        <canvas id="badgeCanvas" width="600" height="320"></canvas>
+        <div class="btn-actions">
+          <button class="act-btn btn-red" onclick="downloadImage()">
+            💾 下载工牌海报 (PNG)
+          </button>
+          <button class="act-btn btn-gray" onclick="copyMd()">
+            📋 复制处方 Markdown
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- 底部可折叠的 MCP 协议日志（评审专家需要时一键查看，平时不占视线） -->
-    <details class="mcp-drawer">
-      <summary>🔍 查看麦当劳 MCP 协议实时调用流水 (JSON-RPC 2.0)</summary>
-      <div class="log-content" id="mcpLogBox">> 等待中枢就绪... 准备调用 [query-nearby-stores, query-meals, list-nutrition-foods, calculate-price]</div>
-    </details>
-
   </main>
 
+  <!-- 底部微型抽屉：MCP 工具流水 -->
+  <details class="debug-drawer">
+    <summary>🔍 查看麦当劳 MCP 协议实时调用流水 (query-nearby-stores, query-meals, list-nutrition-foods, calculate-price)</summary>
+    <div class="log-terminal" id="logBox">> 等待就诊... 中枢初始化完成。</div>
+  </details>
+
   <footer>
-    <p>本项目为 <strong>麦当劳程序员创意开发大赛</strong> 参赛作品 · 严格遵循官方开源协议与规范声明</p>
-    <p style="margin-top: 0.3rem;">
-      官方 MCP 服务：<a href="https://open.mcd.cn/mcp" target="_blank">open.mcd.cn/mcp</a> · 
-      比赛仓库：<a href="https://github.com/M-China/mcd-developer-innovation-challenge" target="_blank">M-China/mcd-developer-innovation-challenge</a>
-    </p>
+    <p>麦当劳程序员创意开发大赛参赛作品 · <a href="https://github.com/beluug/mcd-code-rescue" target="_blank">beluug/mcd-code-rescue</a> · 1024 程序员节专供</p>
   </footer>
 
   <script>
-    // 状态
-    let currentMode = 'mock'; // 'mock' or 'live'
-    let currentSymptom = 'FATAL_CRASH';
-    let lastRx = null;
+    let mode = 'mock';
+    let symptom = 'FATAL_CRASH';
+    let rxData = null;
 
-    // 数据库
-    const DB = {
+    const DATA = {
       stores: [
         { id: "MCD-BJ-001", name: "麦当劳（北京中关村软件园餐厅）" },
         { id: "MCD-SH-002", name: "麦当劳（上海张江高科传奇广场餐厅）" },
         { id: "MCD-SZ-003", name: "麦当劳（深圳科技园科兴科学园餐厅）" }
       ],
-      prescriptions: {
+      cases: {
         FATAL_CRASH: {
           title: "🚨 生产环境 P0 级宕机处方",
           motto: "服务可以挂，麦门信徒的心态不能挂。吃完巨无霸，重启能解万般难。",
           items: [
-            { name: "巨无霸汉堡 (Big Mac)", tag: "经典图腾·多巴胺复活", price: 25.0, kcal: 525, protein: 26.0, caff: 0 },
-            { name: "麦乐鸡 (5块装 McNugets)", tag: "甜酸酱信仰·一口一个", price: 13.5, kcal: 269, protein: 14.0, caff: 0 },
-            { name: "零度可口可乐 (中杯 Zero)", tag: "无糖气泡·激爽回血", price: 10.5, kcal: 1, protein: 0, caff: 35 }
+            { name: "巨无霸汉堡 (Big Mac)", tag: "多巴胺复活", price: 25.0, kcal: 525, prot: 26.0, caff: 0 },
+            { name: "麦乐鸡 (5块装)", tag: "甜酸酱信仰", price: 13.5, kcal: 269, prot: 14.0, caff: 0 },
+            { name: "零度可口可乐 (中杯)", tag: "无糖激爽", price: 10.5, kcal: 1, prot: 0, caff: 35 }
           ]
         },
         REBASE_CONFLICT: {
           title: "🌀 Git 冲突 500 行抚慰处方",
           motto: "代码终会合并，热气腾腾的香芋派才是现实世界永不冲突的主分支。",
           items: [
-            { name: "原味板烧鸡腿堡 (Grilled Chicken)", tag: "极客高蛋白·低脂抗熵", price: 24.5, kcal: 402, protein: 24.5, caff: 0 },
-            { name: "香芋派 (Taro Pie)", tag: "温暖酥脆·治愈胃袋", price: 9.0, kcal: 230, protein: 2.5, caff: 0 },
-            { name: "鲜萃厚乳拿铁 (大杯 Latte)", tag: "温润醇香·抚慰神经", price: 22.0, kcal: 195, protein: 8.5, caff: 120 }
+            { name: "原味板烧鸡腿堡", tag: "高蛋白抗熵", price: 24.5, kcal: 402, prot: 24.5, caff: 0 },
+            { name: "香芋派 (Taro Pie)", tag: "温暖治愈", price: 9.0, kcal: 230, prot: 2.5, caff: 0 },
+            { name: "鲜萃厚乳拿铁 (大杯)", tag: "抚慰神经", price: 22.0, kcal: 195, prot: 8.5, caff: 120 }
           ]
         },
         REQUIREMENT_CHANGED: {
           title: "⚡ 需求发版突变超频处方",
           motto: "没有一个 Bug 能逃脱麦辣鸡腿堡的制裁，150mg 咖啡因强开算力超频！",
           items: [
-            { name: "麦辣鸡腿汉堡 (Spicy McChicken)", tag: "提神爆辣·代码除虫", price: 22.0, kcal: 518, protein: 21.0, caff: 0 },
-            { name: "大号金黄薯条 (Large Fries)", tag: "碳水炸弹·补满血条", price: 16.0, kcal: 434, protein: 5.0, caff: 0 },
-            { name: "鲜萃美式咖啡 (大杯 McCafé)", tag: "超频核心·150mg咖啡因", price: 18.0, kcal: 15, protein: 1.0, caff: 150 }
+            { name: "麦辣鸡腿汉堡", tag: "提神爆辣除虫", price: 22.0, kcal: 518, prot: 21.0, caff: 0 },
+            { name: "大号金黄薯条", tag: "补满碳水", price: 16.0, kcal: 434, prot: 5.0, caff: 0 },
+            { name: "鲜萃美式咖啡 (大杯)", tag: "150mg超频", price: 18.0, kcal: 15, prot: 1.0, caff: 150 }
           ]
         },
         POOR_GUY_OVERTIME: {
           title: "🪙 深夜穷鬼随心配救赎处方",
           motto: "13.9 元随心配，是资本世界里麦门留给无产阶级程序员最后的温柔。",
           items: [
-            { name: "双层吉士汉堡 (Double Cheeseburger)", tag: "1+1穷鬼顶梁柱", price: 21.5, kcal: 450, protein: 25.0, caff: 0 },
-            { name: "零度可口可乐 (中杯 Zero)", tag: "随心配神仙白区搭档", price: 10.5, kcal: 1, protein: 0, caff: 35 }
+            { name: "双层吉士汉堡", tag: "1+1穷鬼顶梁柱", price: 21.5, kcal: 450, prot: 25.0, caff: 0 },
+            { name: "零度可口可乐 (中杯)", tag: "白区搭档", price: 10.5, kcal: 1, prot: 0, caff: 35 }
           ]
         },
         FIT_HACKER: {
           title: "💪 极客久坐抗衰减脂处方",
           motto: "板烧去酱加美式，代码健壮腹肌在。自律的程序员掌控系统掌控人生。",
           items: [
-            { name: "原味板烧鸡腿堡 (去皮/去酱)", tag: "纯瘦肉高蛋白·抗熵首选", price: 24.5, kcal: 320, protein: 26.0, caff: 0 },
-            { name: "鲜萃美式咖啡 (大杯 McCafé)", tag: "零糖纯黑咖啡·燃脂提神", price: 18.0, kcal: 15, protein: 1.0, caff: 150 }
+            { name: "原味板烧鸡腿堡 (去皮/去酱)", tag: "纯瘦肉高蛋白", price: 24.5, kcal: 320, prot: 26.0, caff: 0 },
+            { name: "鲜萃美式咖啡 (大杯)", tag: "零糖燃脂", price: 18.0, kcal: 15, prot: 1.0, caff: 150 }
           ]
         }
       }
     };
 
-    // 模式切换
-    function switchMode(mode) {
-      currentMode = mode;
-      const isLive = (mode === 'live');
-      document.getElementById('tabMock').className = 'mcp-tab-btn ' + (!isLive ? 'active gold' : '');
-      document.getElementById('tabLive').className = 'mcp-tab-btn ' + (isLive ? 'active gold' : '');
-      document.getElementById('liveTokenArea').style.display = isLive ? 'flex' : 'none';
-      document.getElementById('mcpGatewayCard').classList.toggle('live-active', isLive);
-
-      const statusEl = document.getElementById('mcpStatusText');
-      if (isLive) {
-        statusEl.innerHTML = '● 麦当劳官方 Streamable HTTP MCP 生产端点 (https://mcp.mcd.cn)';
-        statusEl.style.color = 'var(--mcd-yellow)';
-      } else {
-        statusEl.innerHTML = '● 本地高保真 Mock 中枢已就绪 (直调 5 项官方 MCP 工具标准数据)';
-        statusEl.style.color = 'var(--green)';
-      }
-      logMcp(`[系统] 切换连接模式至: ${isLive ? '麦当劳官方生产服务' : '离线高保真试车'}`);
+    function setMode(m) {
+      mode = m;
+      const isLive = (m === 'live');
+      document.getElementById('tabMock').classList.toggle('active', !isLive);
+      document.getElementById('tabLive').classList.toggle('active', isLive);
+      document.getElementById('tokenArea').style.display = isLive ? 'flex' : 'none';
+      const tag = document.getElementById('connTag');
+      tag.innerHTML = isLive ? '● 官方生产服务 (https://mcp.mcd.cn)' : '● 离线测试就绪';
+      tag.style.color = isLive ? 'var(--mcd-yellow)' : 'var(--green)';
+      addLog(`[切换] 模式 -> ${isLive ? '麦当劳官方生产服务' : '离线高保真试车'}`);
     }
 
-    function verifyAndConnect() {
-      const token = document.getElementById('mcpTokenInput').value.trim();
-      if (!token) {
-        alert('请输入从麦当劳开放平台获取的 Bearer Token！');
-        return;
-      }
-      logMcp(`[认证] 载入 Bearer Token (${token.slice(0, 6)}...${token.slice(-4)})，已挂载至内存请求头。`);
-      alert('麦当劳官方 MCP Token 载入成功！后续开方将直连官方生产中枢。');
-      executeRx();
+    function saveToken() {
+      const val = document.getElementById('mcpTokenInput').value.trim();
+      if (!val) { alert('请输入有效的 MCP Bearer Token！'); return; }
+      addLog(`[鉴权] Bearer Token (${val.slice(0, 6)}...${val.slice(-4)}) 挂载成功。`);
+      alert('麦当劳官方 Token 已就绪！点击开方即可直连生产服务。');
+      runPrescription();
     }
 
-    function pickSymptom(key, el) {
-      currentSymptom = key;
-      document.querySelectorAll('.symptom-chip').forEach(c => c.classList.remove('selected'));
+    function pick(k, el) {
+      symptom = k;
+      document.querySelectorAll('.s-box').forEach(b => b.classList.remove('selected'));
       el.classList.add('selected');
-      executeRx();
+      runPrescription();
     }
 
-    function logMcp(txt) {
-      const box = document.getElementById('mcpLogBox');
-      const time = new Date().toLocaleTimeString();
-      box.textContent = `[${time}] ${txt}\n` + box.textContent;
+    function addLog(t) {
+      const b = document.getElementById('logBox');
+      b.textContent = `[${new Date().toLocaleTimeString()}] ${t}\n` + b.textContent;
     }
 
-    function executeRx() {
-      const devName = document.getElementById('devName').value.trim() || '麦门极客';
-      const storeKw = document.getElementById('storeKeyword').value.trim() || '中关村';
+    function runPrescription() {
+      const dev = document.getElementById('devName').value.trim() || '麦门极客';
+      const kw = document.getElementById('storeKeyword').value.trim() || '中关村';
 
-      logMcp(`-> MCP Tool [query-nearby-stores]: keyword="${storeKw}"`);
+      addLog(`-> MCP [query-nearby-stores]: "${kw}"`);
+      let st = DATA.stores[0];
+      if (kw.includes('张江')) st = DATA.stores[1];
+      if (kw.includes('深圳') || kw.includes('科兴')) st = DATA.stores[2];
 
-      let store = DB.stores[0];
-      if (storeKw.includes('张江')) store = DB.stores[1];
-      if (storeKw.includes('深圳') || storeKw.includes('科兴')) store = DB.stores[2];
+      addLog(`<- 命中门店: ${st.name} | [query-meals] | [calculate-price]`);
 
-      logMcp(`<- [query-nearby-stores] 命中门店: ${store.name}`);
-      logMcp(`-> MCP Tool [query-meals]: storeId="${store.id}"`);
-      logMcp(`-> MCP Tool [list-nutrition-foods]: 核对热量与卡路里`);
-      logMcp(`-> MCP Tool [calculate-price]: 模拟购物车精确优惠`);
-
-      const rxConfig = DB.prescriptions[currentSymptom] || DB.prescriptions.FATAL_CRASH;
-      let totalKcal = 0, totalProtein = 0, totalCaff = 0, origPrice = 0;
-
-      rxConfig.items.forEach(it => {
-        totalKcal += it.kcal;
-        totalProtein += it.protein;
-        totalCaff += it.caff;
-        origPrice += it.price;
+      const c = DATA.cases[symptom] || DATA.cases.FATAL_CRASH;
+      let kcal = 0, prot = 0, caff = 0, orig = 0;
+      c.items.forEach(it => {
+        kcal += it.kcal;
+        prot += it.prot;
+        caff += it.caff;
+        orig += it.price;
       });
 
-      let finalPrice = (currentSymptom === 'POOR_GUY_OVERTIME') ? 13.9 : (origPrice * 0.78).toFixed(2);
-      let saved = (origPrice - finalPrice).toFixed(2);
+      let fin = (symptom === 'POOR_GUY_OVERTIME') ? 13.9 : (orig * 0.78).toFixed(2);
+      let saved = (orig - fin).toFixed(2);
 
-      lastRx = {
-        title: rxConfig.title,
-        motto: rxConfig.motto,
-        developer: devName,
-        store: store.name,
-        items: rxConfig.items,
-        kcal: totalKcal,
-        protein: totalProtein.toFixed(1),
-        caff: totalCaff,
-        finalPrice: finalPrice,
-        origPrice: origPrice.toFixed(2),
+      rxData = {
+        title: c.title,
+        motto: c.motto,
+        dev: dev,
+        store: st.name,
+        items: c.items,
+        kcal: kcal,
+        prot: prot.toFixed(1),
+        caff: caff,
+        fin: fin,
+        orig: orig.toFixed(2),
         saved: saved
       };
 
-      // 渲染视图
-      document.getElementById('rxTitle').textContent = lastRx.title;
-      document.getElementById('rxStore').textContent = `门店：${store.name}`;
-      document.getElementById('rxMotto').textContent = `"${lastRx.motto}"`;
-      document.getElementById('statKcal').textContent = totalKcal;
-      document.getElementById('statProtein').textContent = totalProtein.toFixed(1) + 'g';
-      document.getElementById('statCaff').textContent = totalCaff + 'mg';
-      document.getElementById('rxPrice').textContent = `¥${finalPrice}`;
-      document.getElementById('rxSaved').textContent = `立省 ¥${saved}`;
+      // 渲染文字
+      document.getElementById('rxTitle').textContent = rxData.title;
+      document.getElementById('rxStore').textContent = rxData.store;
+      document.getElementById('stKcal').textContent = kcal;
+      document.getElementById('stProt').textContent = rxData.prot + 'g';
+      document.getElementById('stCaff').textContent = caff + 'mg';
+      document.getElementById('stPrice').textContent = `¥${fin}`;
+      document.getElementById('stSaved').textContent = `立省 ¥${saved}`;
 
-      const itemsEl = document.getElementById('rxItems');
-      itemsEl.innerHTML = '';
-      lastRx.items.forEach(it => {
-        const div = document.createElement('div');
-        div.className = 'rx-item-row';
-        div.innerHTML = `
-          <div>
-            <div class="rx-item-name">${it.name}</div>
-            <div class="rx-item-sub">${it.tag} · ${it.kcal} kcal</div>
-          </div>
-          <div class="rx-item-price">¥${it.price}</div>
+      const listEl = document.getElementById('rxList');
+      listEl.innerHTML = '';
+      rxData.items.forEach(it => {
+        const d = document.createElement('div');
+        d.className = 'rx-dish';
+        d.innerHTML = `
+          <div><strong>${it.name}</strong> <span style="color:var(--text-muted);font-size:0.72rem;">(${it.tag})</span></div>
+          <div class="rx-dish-price">¥${it.price}</div>
         `;
-        itemsEl.appendChild(div);
+        listEl.appendChild(d);
       });
 
-      logMcp(`[MCP 结算] 应付金额: ¥${finalPrice} (原价 ¥${origPrice.toFixed(2)})，开方完毕！`);
-      drawBadge(lastRx);
+      addLog(`[开方成功] 应付: ¥${fin}，海报已同步重绘。`);
+      renderCanvas(rxData);
     }
 
-    function drawBadge(p) {
+    function renderCanvas(p) {
       const cvs = document.getElementById('badgeCanvas');
       const ctx = cvs.getContext('2d');
       const w = cvs.width, h = cvs.height;
 
-      // 渐变黑底
+      // 背景
       const g = ctx.createLinearGradient(0, 0, w, h);
       g.addColorStop(0, '#1c1b22');
-      g.addColorStop(1, '#0c0c0e');
+      g.addColorStop(1, '#0b0b0e');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
 
-      // 金拱门红黄边框
+      // 外框
       ctx.strokeStyle = '#FFBC0D';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(8, 8, w - 16, h - 16);
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(6, 6, w - 12, h - 12);
 
-      // 头部条
+      // 红顶条
       ctx.fillStyle = '#DA291C';
-      ctx.fillRect(8, 8, w - 16, 48);
+      ctx.fillRect(6, 6, w - 12, 44);
 
       ctx.fillStyle = '#FFBC0D';
-      ctx.font = 'bold 24px sans-serif';
-      ctx.fillText('M', 24, 40);
+      ctx.font = 'bold 22px sans-serif';
+      ctx.fillText('M', 20, 36);
 
       ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillText('1024 麦门极客续命工牌 · MCP 权威认证', 55, 38);
-
-      // 极客档案
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '13px sans-serif';
-      ctx.fillText('极客姓名:', 26, 88);
-      ctx.fillStyle = '#FFBC0D';
       ctx.font = 'bold 15px sans-serif';
-      ctx.fillText(p.developer, 95, 88);
+      ctx.fillText('1024 麦门极客续命工牌 · MCP 权威认证', 50, 34);
 
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '13px sans-serif';
-      ctx.fillText('诊断病症:', 26, 116);
-      ctx.fillStyle = '#f87171';
+      // 极客身份
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('患者工号:', 22, 78);
+      ctx.fillStyle = '#FFBC0D';
       ctx.font = 'bold 14px sans-serif';
-      ctx.fillText(p.title, 95, 116);
+      ctx.fillText(p.dev, 85, 78);
 
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '13px sans-serif';
-      ctx.fillText('官方开方:', 26, 144);
-      let names = p.items.map(it => it.name.split(' ')[0]).join(' + ');
-      ctx.fillStyle = '#e5e7eb';
-      ctx.font = '13px sans-serif';
-      ctx.fillText(names, 95, 144);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('诊断病症:', 22, 104);
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText(p.title, 85, 104);
 
-      // 指标面板
-      ctx.fillStyle = '#141418';
-      ctx.fillRect(24, 168, w - 48, 72);
-      ctx.strokeStyle = '#272730';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('处方餐品:', 22, 130);
+      let combo = p.items.map(i => i.name.split(' ')[0]).join(' + ');
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(combo, 85, 130);
+
+      // 指标小方块
+      ctx.fillStyle = '#141419';
+      ctx.fillRect(20, 150, w - 40, 68);
+      ctx.strokeStyle = '#262630';
       ctx.lineWidth = 1;
-      ctx.strokeRect(24, 168, w - 48, 72);
+      ctx.strokeRect(20, 150, w - 40, 68);
 
       ctx.fillStyle = '#10b981';
-      ctx.font = 'bold 19px sans-serif';
-      ctx.fillText(`${p.kcal} kcal`, 42, 204);
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '11px sans-serif';
-      ctx.fillText('热量对冲', 42, 226);
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText(`${p.kcal} kcal`, 36, 184);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px sans-serif';
+      ctx.fillText('热量对冲', 36, 204);
 
       ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 19px sans-serif';
-      ctx.fillText(`${p.protein}g`, 180, 204);
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '11px sans-serif';
-      ctx.fillText('优质蛋白质', 180, 226);
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText(`${p.prot}g`, 175, 184);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px sans-serif';
+      ctx.fillText('优质蛋白质', 175, 204);
 
       ctx.fillStyle = '#FFBC0D';
-      ctx.font = 'bold 19px sans-serif';
-      ctx.fillText(`¥${p.finalPrice}`, 320, 204);
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '11px sans-serif';
-      ctx.fillText(`立省¥${p.saved}`, 320, 226);
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText(`¥${p.fin}`, 315, 184);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px sans-serif';
+      ctx.fillText(`立省¥${p.saved}`, 315, 204);
 
-      ctx.fillStyle = '#a78bfa';
-      ctx.font = 'bold 19px sans-serif';
-      ctx.fillText('+99%', 460, 204);
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '11px sans-serif';
-      ctx.fillText('除虫战斗力', 460, 226);
+      ctx.fillStyle = '#c084fc';
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText('+99%', 455, 184);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px sans-serif';
+      ctx.fillText('除虫战斗力', 455, 204);
 
-      // 金句
+      // 圣训金句
       ctx.fillStyle = '#FFBC0D';
-      ctx.font = 'italic 12px sans-serif';
-      ctx.fillText(`"${p.motto}"`, 26, 280);
+      ctx.font = 'italic 11.5px sans-serif';
+      ctx.fillText(`"${p.motto}"`, 22, 255);
 
-      // 脚注
-      ctx.fillStyle = '#6b7280';
-      ctx.font = '11px sans-serif';
-      ctx.fillText('Official McDonald\'s MCP Protocol 2.0 · M-China 1024 Hackathon', 26, 312);
+      // 水印
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10.5px sans-serif';
+      ctx.fillText('Official McDonald\'s MCP Protocol 2.0 · M-China 1024 Hackathon', 22, 292);
     }
 
-    function downloadBadge() {
+    function downloadImage() {
       const cvs = document.getElementById('badgeCanvas');
-      const url = cvs.toDataURL('image/png');
       const a = document.createElement('a');
-      a.href = url;
+      a.href = cvs.toDataURL('image/png');
       a.download = `麦门极客续命工牌_${Date.now()}.png`;
       a.click();
     }
 
-    function copyMarkdown() {
-      if (!lastRx) return;
+    function copyMd() {
+      if (!rxData) return;
       const md = `### 🍟 麦门代码急救站 · 1024 程序员续命处方
-- **患者姓名**：${lastRx.developer}
-- **挂号病情**：${lastRx.title}
-- **处方门店**：${lastRx.store}
-- **权威开方**：${lastRx.items.map(it => it.name).join(' + ')}
-- **营养热量**：${lastRx.kcal} kcal | 蛋白质 ${lastRx.protein}g | 咖啡因 ${lastRx.caff}mg
-- **试算价格**：¥${lastRx.finalPrice}（立省 ¥${lastRx.saved}）
-- **麦门圣训**："${lastRx.motto}"
-> 基于麦当劳中国官方 MCP 协议（https://mcp.mcd.cn）驱动`;
+- **极客**：${rxData.dev}
+- **病症**：${rxData.title}
+- **门店**：${rxData.store}
+- **开方**：${rxData.items.map(i => i.name).join(' + ')}
+- **营养**：${rxData.kcal} kcal | 蛋白质 ${rxData.prot}g | 咖啡因 ${rxData.caff}mg
+- **实付**：¥${rxData.fin}（立省 ¥${rxData.saved}）
+- **圣训**："${rxData.motto}"
+> 基于麦当劳中国官方 MCP（https://mcp.mcd.cn）驱动`;
       navigator.clipboard.writeText(md).then(() => {
-        alert('处方 Markdown 已复制至剪贴板，可粘贴至群聊或朋友圈！');
+        alert('处方 Markdown 已复制至剪贴板！');
       });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      executeRx();
+      runPrescription();
     });
   </script>
 </body>
